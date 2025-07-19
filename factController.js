@@ -3,15 +3,21 @@ const getAllFacts = async (req, res) => {
   try {
     const db = req.app.locals.db;
     const curCategory = req.query.curCategory;
+    const page = req.query.page || 1;
+    const limit = parseInt(req.query?.limit) || 10;
+    const skip = page * limit;
     const filter = curCategory === "all" ? {} : { category: curCategory };
     const collection = await db.collection("facts");
     const facts = await collection
       .find(filter)
+      .skip(skip)
+      .limit(limit)
       .sort({ createdAt: -1 })
       .toArray();
-    res.status(200).json(facts);
+    const totalFacts = await collection.countDocuments(filter);
+    res.status(200).json({ facts, totalPages: Math.ceil(totalFacts / limit) });
   } catch (error) {
-    res.status(500).json({ message: "Server error", error: error.message });
+    res.status(500).json({ message: "Server error." });
   }
 };
 
@@ -33,7 +39,7 @@ const addOneFact = async (req, res) => {
       .status(200)
       .json(`A document was inserted with the _id: ${result.insertedId}`);
   } catch (error) {
-    res.status(500).json({ message: "Server error", error: error.message });
+    res.status(500).json({ message: "Server error." });
   }
 };
 
@@ -70,7 +76,7 @@ const updateEmojis = async (req, res) => {
     });
   } catch (error) {
     console.error("updateEmojis error:", error);
-    res.status(500).json({ message: "Server error", error: error.message });
+    res.status(500).json({ message: "Server error." });
   }
 };
 

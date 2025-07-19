@@ -23,6 +23,7 @@ body {
 .header {
   margin-bottom: 40px;
   display: flex;
+  gap: 4px;
   justify-content: space-between;
   align-items: center;
 }
@@ -103,8 +104,7 @@ h1 {
   display: grid;
   grid-template-columns: 250px 1fr;
   gap: 48px;
-  height: calc(100vh - 48px - 115px - 40px);
-  /* background-color: green; */
+  /* height: calc(100vh - 48px - 115px - 40px); */
 }
 
 @media (max-width: 900px) {
@@ -128,27 +128,6 @@ section::-webkit-scrollbar {
   margin-bottom: 16px;
 }
 
-.fact {
-  background-color: #44403c;
-  font-size: 20px;
-  line-height: 1.4;
-  letter-spacing: -1px;
-  padding: 16px 24px;
-  margin-bottom: 16px;
-  display: flex;
-  gap: 18px;
-  justify-content: space-between;
-  align-items: center;
-  border-radius: 16px;
-}
-
-@media (max-width: 1200px) {
-  .fact {
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 10px;
-  }
-}
 .source:link,
 .source:visited {
   color: #a8a29e;
@@ -167,6 +146,7 @@ section::-webkit-scrollbar {
   font-family: "Coiny", sans-serif;
   padding: 3px 10px;
   border-radius: 30px;
+  margin: 2px;
 }
 
 .btn {
@@ -245,21 +225,52 @@ ul {
 }
 
 .emoji-btn {
+  margin: 8px;
+  color: #a7897d;
+  max-width: 65px;
+  max-height: 28px;
   display: flex;
-  flex-wrap: nowrap;
   align-items: center;
+  justify-content: center;
   gap: 4px;
-  padding: 4px 8px;
-  border: 1px solid #ccc;
-  border-radius: 16px;
-  background-color: #f8fafc;
-  cursor: pointer;
+  padding: 2px 12px;
+  border: 1px solid #715d54;
+  background-color: #f3e7f0;
+  border-radius: 32px;
   transition: background 0.2s ease;
 }
 
 .reactions {
   display: flex;
   flex-wrap: wrap;
-  gap: 4px;
+  gap: 2px;
   align-items: center;
+  justify-content: center;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 20px;
+  list-style: none;
+  padding: 0;
+}
+
+.page-item {
+  padding: 6px 12px;
+  border-radius: 6px;
+  background-color: #334155;
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.2s ease;
+}
+
+.page-item:hover {
+  background-color: #475569;
+}
+
+.active {
+  background-color: #0ea5e9;
 }

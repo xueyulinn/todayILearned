@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { BASE_URL } from "../apiPath";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
 const FactForm = ({ categories, setFacts, setDisplayForm }) => {
   const [fact, setfact] = useState("");
   const [source, setSource] = useState("");
@@ -19,8 +20,8 @@ const FactForm = ({ categories, setFacts, setDisplayForm }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!fact) {
-      setError("No fact entered.");
+    if (!fact || fact.length > 150) {
+      setError("The length of the fact is between 0 and 150 characters.");
       return;
     } else if (!source || !isValidUrl(source)) {
       setError("Invalid source url");
@@ -49,6 +50,7 @@ const FactForm = ({ categories, setFacts, setDisplayForm }) => {
       setfact("");
       setSource("");
       setCategory("");
+      toast.success("Added successfully.");
       // close the form
       setDisplayForm(false);
     } catch (error) {
@@ -59,18 +61,19 @@ const FactForm = ({ categories, setFacts, setDisplayForm }) => {
   return (
     <form className="form" onSubmit={(e) => handleSubmit(e)}>
       <input
-        type="fact"
+        type="text"
+        maxLength={150}
         placeholder="Share a fact with the world..."
         value={fact}
         onChange={(e) => setfact(e.target.value)}
       />
       <input
-        type="fact"
+        type="url"
         placeholder="Source..."
         value={source}
         onChange={(e) => setSource(e.target.value)}
       />
-      <span>{200 - fact.length}</span>
+      <span>{fact.length <= 150 ? 150 - fact.length : 0}</span>
       <select value={category} onChange={(e) => setCategory(e.target.value)}>
         <option value="">CATEGORY</option>
         {categories.map((curCategory) => (
