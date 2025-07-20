@@ -2,6 +2,7 @@ import axios from "axios";
 import EmojiPicker from "emoji-picker-react";
 import { useState } from "react";
 import { BASE_URL } from "../apiPath";
+import { toast } from "react-toastify";
 const FactItem = ({ item, categories }) => {
   const [openEmoji, setOpenEmoji] = useState(true);
   const [emojis, setEmojis] = useState(item.emojis);
@@ -15,12 +16,14 @@ const FactItem = ({ item, categories }) => {
       setEmojis(res.data.emojis);
       setOpenEmoji(!openEmoji);
     } catch (error) {
-      console.log(error.message);
+      if (error.response.data.message) {
+        toast.error(error.response.data.message);
+      }
     }
   };
 
   return (
-    <div className="min-h-[6rem] bg-stone-700 text-[20px] tracking-[-1px] mb-4 flex flex-col gap-[8px] items-start rounded-2xl">
+    <div className="min-h-[4rem] bg-stone-700 text-[20px] tracking-[-1px] mb-4 flex flex-col gap-[8px] items-start rounded-2xl">
       <div className="w-full">
         <p className="break-words whitespace-normal">
           {item.fact}

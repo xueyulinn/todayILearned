@@ -1,8 +1,8 @@
-import { useState } from "react";
-import { BASE_URL } from "../apiPath";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
-const FactForm = ({ categories, setFacts, setDisplayForm }) => {
+import { useState } from "react";
+import { toast } from "react-toastify";
+import { BASE_URL } from "../apiPath";
+const FactForm = ({ categories, setDisplayForm, getAllFacts }) => {
   const [fact, setfact] = useState("");
   const [source, setSource] = useState("");
   const [category, setCategory] = useState("");
@@ -39,12 +39,6 @@ const FactForm = ({ categories, setFacts, setDisplayForm }) => {
         source,
         category,
       });
-      const res = await axios.get(BASE_URL + "/facts", {
-        params: {
-          curCategory: "all",
-        },
-      });
-      setFacts(res.data);
       // reset state
       setIsPosting(false);
       setfact("");
@@ -53,8 +47,9 @@ const FactForm = ({ categories, setFacts, setDisplayForm }) => {
       toast.success("Added successfully.");
       // close the form
       setDisplayForm(false);
+      getAllFacts();
     } catch (error) {
-      console.log(error.message);
+      toast.error(error.response.data.message);
     }
   };
 

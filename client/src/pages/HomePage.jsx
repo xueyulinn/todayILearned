@@ -9,7 +9,6 @@ import FactFilter from "../components/FactFilter";
 import FactForm from "../components/FactForm";
 import ReactPaginate from "react-paginate";
 const HomePage = () => {
-  console.log("ss");
   const CATEGORIES = [
     { name: "technology", color: "#3b82f6" },
     { name: "science", color: "#16a34a" },
@@ -58,7 +57,13 @@ const HomePage = () => {
   return (
     <div>
       <Header handleClick={handleClick} displayForm={displayForm} />
-      {displayForm && <FactForm categories={CATEGORIES} setFacts={setFacts} />}
+      {displayForm && (
+        <FactForm
+          categories={CATEGORIES}
+          setDisplayForm={setDisplayForm}
+          getAllFacts={getAllFacts}
+        />
+      )}
       <div className="main">
         <FactFilter
           categories={CATEGORIES}

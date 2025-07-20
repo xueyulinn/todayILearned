@@ -3,8 +3,8 @@ const getAllFacts = async (req, res) => {
   try {
     const db = req.app.locals.db;
     const curCategory = req.query.curCategory;
-    const page = req.query.page || 1;
-    const limit = parseInt(req.query?.limit) || 10;
+    const page = parseInt(req.query.page) || 0;
+    const limit = parseInt(req.query.limit) || 10;
     const skip = page * limit;
     const filter = curCategory === "all" ? {} : { category: curCategory };
     const collection = await db.collection("facts");
